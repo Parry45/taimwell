@@ -10,7 +10,7 @@ Design: Figma file "Daymark" → page **02 · Screens — v3 light & fun**.
 
 | Screen | What it does |
 | --- | --- |
-| Sign in | Email + 6-digit code (works inside the installed iPhone app) |
+| Sign in | Email + password (works inside the installed iPhone app); sign-in link as a backup |
 | Set-up (3 steps) | Hats with emoji + weekly hours · your real week (job split, evenings, weekend, protected rest) · capture sources |
 | Today | 3 things, progress ring, on-time streak, free-time & risk chips, date strip |
 | Quick capture | Paste/share/speak a message → parsed into who/what/when/hat → estimate correction → fit check → commit |
@@ -29,8 +29,7 @@ Data is **local-first** (IndexedDB) and syncs to Supabase, so it works offline a
 
 ### 1 · Supabase (once)
 1. SQL Editor → run [`supabase/migrations/001_init.sql`](supabase/migrations/001_init.sql).
-2. Authentication → Emails → Templates → **Magic Link**: make sure the body contains `{{ .Token }}`, e.g.
-   `<h2>Your Taimwell code</h2><p style="font-size:28px;letter-spacing:6px"><b>{{ .Token }}</b></p>`
+2. Sign-in uses **email + password** (free Supabase projects can't edit email templates without custom SMTP). The default "Confirm signup" email just confirms your address.
 3. Authentication → URL Configuration → add your Vercel URL to **Site URL / Redirect URLs**.
 
 ### 2 · Vercel
@@ -55,7 +54,7 @@ Google tokens last an hour; "Refresh" in Settings re-reads your calendars. Busy 
 they sync to your phone even if you connected on a laptop.
 
 ### 4 · Install on iPhone
-Open the Vercel URL in **Safari** → Share → **Add to Home Screen**. Sign in with the emailed code.
+Open the Vercel URL in **Safari** → Share → **Add to Home Screen**. Create your account (email + password), tap the confirmation email once, then sign in.
 
 **Capturing from WhatsApp:** long-press a message → Copy → Taimwell ＋ → *Paste message*. Or build the
 "Send to Taimwell" Shortcut (Settings → *Capture from WhatsApp on iPhone* shows the steps). Shortcuts open in Safari,
